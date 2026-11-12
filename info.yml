@@ -197,6 +197,23 @@ configuration:
                       launcher should that be required. This hook's methods are only called
                       when Software entity launchers are being used."
 
+    restrictions:
+        type: dict
+        allows_empty: True
+        default_value: {}
+        description: |
+            Restricted to these users (of these groups) that will have access to this
+            app. Specify either name (str) or entity ID (int) into the "Users" and/or
+            "Groups" lists e.g.
+
+            restrictions:
+              Groups:
+               - 123
+               - "Animators"
+              Users:
+               - 456
+               - "Jane Smith"
+
 # the Shotgun fields that this app needs in order to operate correctly
 requires_shotgun_fields:
 
