@@ -15,6 +15,8 @@ Specify either name (str) or entity ID (int) into the "Users" and/or "Groups" li
 
 """
 
+from __future__ import annotations
+
 from collections.abc import Generator
 from typing import Any
 
@@ -48,22 +50,26 @@ class UserRestrictedLauncher(SingleConfigLauncher):
 
         if user_restrictions or group_restrictions:
             valid = False
-            user_entity = self._tk_app.context.user
-            if user_restrictions:
-                valid_user_values: set[str | int] = {
-                    user_entity["id"],
-                    user_entity["name"],
-                }
-                valid = bool(valid_user_values & user_restrictions)
+            if (
+                isinstance(user_entity := self._tk_app.context.user, dict)
+                and "id" in user_entity
+                and "name" in user_entity
+            ):
+                if user_restrictions:
+                    valid_user_values: set[str | int] = {
+                        user_entity["id"],
+                        user_entity["name"],
+                    }
+                    valid = bool(valid_user_values & user_restrictions)
 
-            if group_restrictions and not valid:
-                valid_group_values: set[str | int] = set()
-                groups = self._tk_app.shotgun.find(
-                    "Group", [("users", "is", user_entity)], fields=["code"]
-                )  # "is" in multi_entity behaves like 'contains'
-                for group in groups:
-                    valid_group_values |= {group["id"], group["code"]}
-                valid = bool(valid_group_values & group_restrictions)
+                if group_restrictions and not valid:
+                    valid_group_values: set[str | int] = set()
+                    groups = self._tk_app.shotgun.find(
+                        "Group", [("users", "is", user_entity)], fields=["code"]
+                    )  # "is" in multi_entity behaves like 'contains'
+                    for group in groups:
+                        valid_group_values |= {group["id"], group["code"]}
+                    valid = bool(valid_group_values & group_restrictions)
 
         return valid
 
