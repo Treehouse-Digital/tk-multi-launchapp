@@ -208,11 +208,11 @@ configuration:
 
             restrictions:
               Groups:
-               - 123
-               - "Animators"
+                - 123
+                - "Animators"
               Users:
-               - 456
-               - "Jane Smith"
+                - 456
+                - "Jane Smith"
 
 # the Shotgun fields that this app needs in order to operate correctly
 requires_shotgun_fields:
