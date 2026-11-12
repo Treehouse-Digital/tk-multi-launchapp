@@ -36,7 +36,7 @@ class LaunchApplication(sgtk.platform.Application):
             self._launcher = app_payload.SoftwareEntityLauncher()
         else:
             # For traditional setups
-            self._launcher = app_payload.SingleConfigLauncher()
+            self._launcher = app_payload.UserRestrictedLauncher()
 
         # Register the appropriate DCC launch commands
         self._launcher.register_launch_commands()

@@ -8,6 +8,14 @@
 # agreement to the Shotgun Pipeline Toolkit Source Code License. All rights
 # not expressly granted therein are reserved by Shotgun Software Inc.
 
+from ..launch_indicator_dialog import qtwidgets
 from .single_config_launcher import SingleConfigLauncher
 from .software_entity_launcher import SoftwareEntityLauncher
-from ..launch_indicator_dialog import qtwidgets
+from .user_restricted_launcher import UserRestrictedLauncher
+
+__all__ = (
+    "SingleConfigLauncher",
+    "SoftwareEntityLauncher",
+    "UserRestrictedLauncher",
+    "qtwidgets",
+)
